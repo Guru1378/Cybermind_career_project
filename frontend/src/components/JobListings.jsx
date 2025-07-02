@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './JobListings.css';
 
-// Add this helper function here:
+// Helper function to format posted time
 function getPostedAgo(createdAt) {
   const now = new Date();
   const created = new Date(createdAt);
@@ -25,7 +25,8 @@ const JobListings = ({ filters }) => {
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get('/api/jobs');
+      const API_URL = process.env.REACT_APP_API_URL;
+      const response = await axios.get(`${API_URL}/api/jobs`);
       setJobs(response.data);
     } catch (error) {
       console.error("Error fetching jobs", error);
@@ -50,19 +51,6 @@ const JobListings = ({ filters }) => {
 
     return titleMatch && locationMatch && jobTypeMatch && salaryMatch;
   });
-
-  // Helper to split a string into chunks of N words
-  function splitDescription(desc, wordsPerChunk = 25) {
-    if (!desc) return [];
-    // If desc is already an array, join to a single string
-    const text = Array.isArray(desc) ? desc.join(' ') : desc;
-    const words = text.split(/\s+/);
-    const chunks = [];
-    for (let i = 0; i < words.length; i += wordsPerChunk) {
-      chunks.push(words.slice(i, i + wordsPerChunk).join(' '));
-    }
-    return chunks;
-  }
 
   return (
     <div style={{ padding: 40, background: '#f7f9fb', minHeight: '100vh' }}>
@@ -166,33 +154,6 @@ const JobListings = ({ filters }) => {
                 ))}
               </div>
             </div>
-
-            {/* Skills Required Headline and Badges */}
-            {job.skills && job.skills.length > 0 && (
-              <div style={{ width: '100%', margin: '8px 0 2px 0' }}>
-                <div style={{ fontWeight: 700, fontSize: 15, color: '#222', marginBottom: 4 }}>
-                  Skills Required
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                  {job.skills.map((skill, idx) => (
-                    <span
-                      key={idx}
-                      style={{
-                        background: '#eaf3ff',
-                        color: '#0099ff',
-                        borderRadius: 8,
-                        padding: '2px 10px',
-                        fontSize: 13,
-                        fontWeight: 500,
-                        marginBottom: 2
-                      }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Apply Button */}
             <button

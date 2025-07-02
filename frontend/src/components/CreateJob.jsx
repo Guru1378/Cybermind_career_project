@@ -41,7 +41,8 @@ const CreateJob = ({ onClose, onJobCreated }) => {
     }
 
     try {
-      await axios.post('/api/jobs', {
+      const API_URL = process.env.REACT_APP_API_URL;
+      await axios.post(`${API_URL}/api/jobs`, {
         title: formData.title,
         company: formData.company,
         companyLogo: formData.companyLogo,
