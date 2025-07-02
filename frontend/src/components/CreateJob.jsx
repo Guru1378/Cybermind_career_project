@@ -40,8 +40,10 @@ const CreateJob = ({ onClose, onJobCreated }) => {
       return;
     }
 
+    const API_URL = "https://cybermind-career-project-backend-obh3.onrender.com";
+    console.log('API_URL:', API_URL);
+
     try {
-      const API_URL = process.env.REACT_APP_API_URL;
       await axios.post(`${API_URL}/api/jobs`, {
         title: formData.title,
         company: formData.company,
@@ -74,10 +76,10 @@ const CreateJob = ({ onClose, onJobCreated }) => {
         style={{
           background: '#fff',
           borderRadius: 14,
-          minWidth: 480, // increased from 400
-          maxWidth: 600, // increased from 500
-          width: '98vw', // slightly increased
-          padding: '1.8rem 1.8rem 1.2rem 1.8rem', // increased padding
+          minWidth: 480,
+          maxWidth: 600,
+          width: '98vw',
+          padding: '1.8rem 1.8rem 1.2rem 1.8rem',
           boxShadow: '0 4px 16px rgba(111,60,255,0.10), 0 1px 4px rgba(0,0,0,0.06)',
           display: 'flex',
           flexDirection: 'column',
@@ -87,8 +89,8 @@ const CreateJob = ({ onClose, onJobCreated }) => {
       >
         <h2 style={{
           fontWeight: 700,
-          fontSize: 18, // reduced from 24
-          marginBottom: 14, // reduced
+          fontSize: 18,
+          marginBottom: 14,
           color: '#222',
           textAlign: 'center',
           letterSpacing: 0.01,
@@ -96,8 +98,8 @@ const CreateJob = ({ onClose, onJobCreated }) => {
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: '0.7rem 1rem', // reduced gap
-          marginBottom: 10, // reduced
+          gap: '0.7rem 1rem',
+          marginBottom: 10,
         }}>
           <div>
             <label htmlFor="title" style={labelStyle}>Job Title</label>
@@ -225,7 +227,7 @@ const CreateJob = ({ onClose, onJobCreated }) => {
             placeholder="Please share a description to let the candidate know more about the job role"
             style={{
               ...inputStyle,
-              minHeight: 80, // increased from 50
+              minHeight: 80,
               fontSize: 13,
               resize: 'vertical',
               fontFamily: 'inherit',
@@ -236,7 +238,7 @@ const CreateJob = ({ onClose, onJobCreated }) => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginTop: 6, // reduced
+          marginTop: 6,
         }}>
           <button
             type="button"
@@ -246,9 +248,9 @@ const CreateJob = ({ onClose, onJobCreated }) => {
               color: '#222',
               border: '2px solid #222',
               borderRadius: 8,
-              padding: '0.5rem 1.2rem', // reduced
+              padding: '0.5rem 1.2rem',
               fontWeight: 500,
-              fontSize: 14, // reduced
+              fontSize: 14,
               cursor: 'pointer',
               boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
               transition: 'background 0.2s, color 0.2s',
@@ -263,9 +265,9 @@ const CreateJob = ({ onClose, onJobCreated }) => {
               color: '#fff',
               border: 'none',
               borderRadius: 8,
-              padding: '0.5rem 1.5rem', // reduced
+              padding: '0.5rem 1.5rem',
               fontWeight: 600,
-              fontSize: 15, // reduced
+              fontSize: 15,
               cursor: 'pointer',
               boxShadow: '0 2px 8px rgba(0,153,255,0.10)',
               transition: 'background 0.2s, transform 0.15s',
@@ -284,18 +286,18 @@ const CreateJob = ({ onClose, onJobCreated }) => {
 
 const labelStyle = {
   fontWeight: 500,
-  marginBottom: 4, // reduced
+  marginBottom: 4,
   display: 'block',
   color: '#222',
-  fontSize: 13, // reduced
+  fontSize: 13,
   letterSpacing: 0.01,
 };
 
 const inputStyle = {
   border: '1.2px solid #e5e7eb',
   borderRadius: 6,
-  padding: '0.5rem 0.7rem', // reduced
-  fontSize: 13, // reduced
+  padding: '0.5rem 0.7rem',
+  fontSize: 13,
   background: '#f8fafc',
   outline: 'none',
   marginBottom: 0,

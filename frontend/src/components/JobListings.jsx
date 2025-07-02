@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './JobListings.css';
 
-// Helper function to format posted time
 function getPostedAgo(createdAt) {
   const now = new Date();
   const created = new Date(createdAt);
   const diffMs = now - created;
   const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
   if (diffHrs < 1) return 'Just Now';
   if (diffHrs < 24) return `${diffHrs}h Ago`;
   return `${diffDays}d Ago`;
@@ -25,21 +23,19 @@ const JobListings = ({ filters }) => {
 
   const fetchJobs = async () => {
     try {
-      const API_URL = process.env.REACT_APP_API_URL;
+      const API_URL = "https://cybermind-career-project-backend-obh3.onrender.com";
       const response = await axios.get(`${API_URL}/api/jobs`);
-      setJobs(response.data);
+      console.log("Jobs API response:", response.data); // Add this line
+      setJobs(response.data.jobs);
     } catch (error) {
       console.error("Error fetching jobs", error);
     }
   };
 
-  // Filtering logic
-  const filteredJobs = jobs.filter(job => {
+  const filteredJobs = Array.isArray(jobs) ? jobs.filter(job => {
     const titleMatch = !filters.title || job.title.toLowerCase().includes(filters.title.toLowerCase());
     const locationMatch = !filters.location || job.location.toLowerCase().includes(filters.location.toLowerCase());
     const jobTypeMatch = !filters.jobType || job.jobType === filters.jobType;
-
-    // Salary filter (optional, as before)
     let salaryNum = 0;
     if (job.salary) {
       const match = job.salary.replace(/[^0-9]/g, '');
@@ -48,9 +44,8 @@ const JobListings = ({ filters }) => {
     const min = parseInt(filters.salaryMin, 10) || 0;
     const max = parseInt(filters.salaryMax, 10) || Infinity;
     const salaryMatch = salaryNum >= min && salaryNum <= max;
-
     return titleMatch && locationMatch && jobTypeMatch && salaryMatch;
-  });
+  }) : [];
 
   return (
     <div style={{ padding: 40, background: '#f7f9fb', minHeight: '100vh' }}>
@@ -142,8 +137,7 @@ const JobListings = ({ filters }) => {
                 <span role="img" aria-label="sal">💰</span> {job.salary}
               </span>
             </div>
-
-            {/* Description Headline and Content */}
+            {/* Description */}
             <div style={{ width: '100%', margin: '8px 0 0 0' }}>
               <div style={{ fontWeight: 700, fontSize: 15, color: '#222', marginBottom: 2 }}>
                 Description
@@ -154,7 +148,6 @@ const JobListings = ({ filters }) => {
                 ))}
               </div>
             </div>
-
             {/* Apply Button */}
             <button
               style={{
