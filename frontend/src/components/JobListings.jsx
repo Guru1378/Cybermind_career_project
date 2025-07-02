@@ -25,10 +25,18 @@ const JobListings = ({ filters }) => {
     try {
       const API_URL = "https://cybermind-career-project-backend-obh3.onrender.com";
       const response = await axios.get(`${API_URL}/api/jobs`);
-      console.log("Jobs API response:", response.data); // Add this line
-      setJobs(response.data.jobs);
+      console.log("Jobs API response:", response.data);
+      // Handle both array and object response
+      if (Array.isArray(response.data)) {
+        setJobs(response.data);
+      } else if (Array.isArray(response.data.jobs)) {
+        setJobs(response.data.jobs);
+      } else {
+        setJobs([]);
+      }
     } catch (error) {
       console.error("Error fetching jobs", error);
+      setJobs([]);
     }
   };
 
